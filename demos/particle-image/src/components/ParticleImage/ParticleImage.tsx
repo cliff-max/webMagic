@@ -1,9 +1,10 @@
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useImageParticles } from '../../hooks/useImageParticles'
 import { useGPGPU } from '../../core/ShaderSystem'
 import { usePointer3D } from '../../hooks/usePointer3D'
+import { useAdaptiveStep } from '../../core/PerformanceMonitor'
 import Particles from './Particles'
 import InteractionPlane from './InteractionPlane'
 import CameraSystem from '../../core/CameraSystem'
@@ -46,9 +47,15 @@ export default function ParticleImage({
 }: ParticleImageProps) {
   const planeRef = useRef<THREE.Mesh>(null)
 
+  // 自适应采样步长：性能降级时自动增大 step，恢复时减小
+  const [step, setStep] = useState(samplingStep)
+  useAdaptiveStep(samplingStep, (s) => setStep(s))
+  // HUD 手动改 samplingStep 时同步到 step
+  useEffect(() => setStep(samplingStep), [samplingStep])
+
   const { data, originTexture, width, height } = useImageParticles(
     image,
-    samplingStep,
+    step,
     depthScale,
   )
 

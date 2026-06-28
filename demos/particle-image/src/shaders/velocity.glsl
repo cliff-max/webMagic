@@ -1,6 +1,5 @@
-// GPGPU：计算速度。vUv 由 GPUComputationRenderer 内置 passthrough vertex 提供。
-uniform sampler2D tPosition;   // 当前位置（ping-pong，自动绑定）
-uniform sampler2D tVelocity;   // 当前速度（ping-pong，自动绑定）
+// GPGPU：计算速度。uv 由 resolution + gl_FragCoord 派生。
+// tPosition / tVelocity 由 GPUComputationRenderer 根据 setVariableDependencies 自动注入，无需手动声明。
 uniform sampler2D tOrigin;     // 原始位置（常量 DataTexture）
 uniform vec3  uMouse;
 uniform float uMouseActive;
@@ -11,9 +10,10 @@ uniform float uReturnSpeed;
 uniform float uDamping;
 
 void main() {
-  vec3 pos    = texture2D(tPosition, vUv).xyz;
-  vec3 origin = texture2D(tOrigin,   vUv).xyz;
-  vec3 vel    = texture2D(tVelocity, vUv).xyz;
+  vec2 uv = gl_FragCoord.xy / resolution.xy;
+  vec3 pos    = texture2D(tPosition, uv).xyz;
+  vec3 origin = texture2D(tOrigin,   uv).xyz;
+  vec3 vel    = texture2D(tVelocity, uv).xyz;
 
   // 鼠标排斥：靠近时沿(粒子→鼠标)反向被推开
   vec3 toMouse = pos - uMouse;

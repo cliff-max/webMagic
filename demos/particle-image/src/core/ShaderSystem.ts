@@ -19,6 +19,7 @@ export function useGPGPU({ origin, texSize }: { origin: THREE.DataTexture; texSi
 
   // useMemo 首次构造；GPGPU 依赖 gl，在 Canvas 内 gl 已就绪
   return useMemo(() => {
+    if (!origin.image?.data) return null // 原始纹理未就绪，跳过初始化
     const gpu = new GPUComputationRenderer(texSize, texSize, gl)
     const pos0 = gpu.createTexture()
     const vel0 = zerosTexture(texSize)
