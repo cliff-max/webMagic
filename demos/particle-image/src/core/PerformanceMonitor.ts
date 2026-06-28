@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 
 const FPS_LOW = 45      // 低于此值考虑降级
@@ -13,6 +13,14 @@ export function useAdaptiveStep(initialStep: number, onChange: (step: number) =>
   const frames = useRef<number[]>([])
   const stableLow = useRef(0)
   const stableHigh = useRef(0)
+
+  // 外部手动改 samplingStep 时同步内部基准，防止自适应滑窗覆盖用户手动值
+  useEffect(() => {
+    stepRef.current = initialStep
+    frames.current = []
+    stableLow.current = 0
+    stableHigh.current = 0
+  }, [initialStep])
 
   useFrame((_, delta) => {
     const fps = 1 / delta

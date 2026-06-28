@@ -45,7 +45,9 @@ export function useImageParticles(
         const originTexture = vec3ArrayToTexture(data.positions, data.texSize)
         if (!cancelled) setResult({ data, originTexture, width: imageData.width, height: imageData.height })
       })
-      .catch((e) => console.error('[useImageParticles]', e))
+      .catch((e) => {
+        console.error('[useImageParticles] 图片粒子生成失败:', e)
+      })
     return () => {
       cancelled = true
     }

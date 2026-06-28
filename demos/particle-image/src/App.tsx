@@ -19,7 +19,11 @@ export default function App() {
     try {
       setError(null)
       await loadImageFromFile(file) // 校验格式/可加载
-      setImage(URL.createObjectURL(file))
+      // 替换前释放旧 blob URL，防止内存泄漏
+      setImage(prev => {
+        if (prev.startsWith('blob:')) URL.revokeObjectURL(prev)
+        return URL.createObjectURL(file)
+      })
     } catch (e) {
       setError((e as Error).message)
     }

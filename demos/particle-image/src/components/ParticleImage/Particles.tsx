@@ -31,14 +31,15 @@ export default function Particles({ data, gpgpu, uSize = 2, uOpacity = 1 }: Prop
     return g
   }, [data])
 
-  // uniforms 稳定引用，初始值仅作 fallback
+  // uniforms 稳定引用：刻意保持 [] 空依赖，避免 R3F 每帧重建 material。
+  // 值由下方 useFrame 每帧覆盖（tPosition/uSize/uOpacity），初始值仅作 fallback。
   const uniforms = useMemo(
     () => ({
       tPosition: { value: null as THREE.Texture | null },
       uSize: { value: uSize },
       uOpacity: { value: uOpacity },
     }),
-    [],
+    [], // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   useFrame((_, delta) => {

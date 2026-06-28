@@ -9,6 +9,9 @@ import Particles from './Particles'
 import InteractionPlane from './InteractionPlane'
 import CameraSystem from '../../core/CameraSystem'
 
+// GPGPU 未就绪时的空纹理兜底（模块级常量，避免每次渲染新建）
+const EMPTY_TEX = new THREE.DataTexture()
+
 export type ParticleImageProps = {
   image: HTMLImageElement | string
   particleSize?: number
@@ -63,7 +66,7 @@ export default function ParticleImage({
   const gpgpu = useGPGPU(
     originTexture
       ? { origin: originTexture, texSize: data?.texSize ?? 1 }
-      : { origin: new THREE.DataTexture(), texSize: 1 },
+      : { origin: EMPTY_TEX, texSize: 1 },
   )
 
   const { pointer3D, isActive, events } = usePointer3D(planeRef)

@@ -46,5 +46,5 @@ HUD 滑块通过 App.tsx state → ParticleImage props → useEffect / useFrame 
 ## 扩展点
 
 - **音乐 uniform**：ShaderSystem 已预留 uniform 注入点，可注入音频频谱数据驱动粒子运动。
-- **深度图替换**：DepthGenerator 支持传入自定义深度图（`DepthMapGenerator`），实现法线/深度相机输入。
+- **深度图替换**：未来可替换为真实/AI 深度图（当前 `applyDepth` 仅基于亮度）。
 - **后处理**：在 Particles 组件外层包裹 `@react-three/postprocessing` EffectComposer，添加 Bloom / DOF 等效果。
