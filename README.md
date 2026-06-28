@@ -19,7 +19,7 @@ webMagic/
 
 ## 项目列表
 
-- _暂无_
+- [particle-image](./demos/particle-image) — 图片转 3D 粒子云渲染模块：上传任意图片实时生成可交互 3D 粒子云，GPGPU 物理驱动、鼠标推动粒子、自由相机观测
 
 <!-- 每完成一个 demo 在此追加： - [名称](./demos/名称) — 简介 -->
 
