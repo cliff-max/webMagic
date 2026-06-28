@@ -1,0 +1,5 @@
+dist
+node_modules
+*.glsl
+package-lock.json
+src/assets/*.jpg

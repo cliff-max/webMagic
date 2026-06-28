@@ -5,7 +5,10 @@ import { applyDepth } from './DepthGenerator'
 function fakeImage(w: number, h: number, fill: [number, number, number]): ImageData {
   const data = new Uint8ClampedArray(w * h * 4)
   for (let i = 0; i < w * h; i++) {
-    data[i * 4] = fill[0]; data[i * 4 + 1] = fill[1]; data[i * 4 + 2] = fill[2]; data[i * 4 + 3] = 255
+    data[i * 4] = fill[0]
+    data[i * 4 + 1] = fill[1]
+    data[i * 4 + 2] = fill[2]
+    data[i * 4 + 3] = 255
   }
   return { data, width: w, height: h } as ImageData
 }

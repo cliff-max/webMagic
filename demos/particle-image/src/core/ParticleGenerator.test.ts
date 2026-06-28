@@ -4,7 +4,10 @@ import { generateParticles } from './ParticleGenerator'
 function fakeImage(w: number, h: number, fill: [number, number, number]): ImageData {
   const data = new Uint8ClampedArray(w * h * 4)
   for (let i = 0; i < w * h; i++) {
-    data[i * 4] = fill[0]; data[i * 4 + 1] = fill[1]; data[i * 4 + 2] = fill[2]; data[i * 4 + 3] = 255
+    data[i * 4] = fill[0]
+    data[i * 4 + 1] = fill[1]
+    data[i * 4 + 2] = fill[2]
+    data[i * 4 + 3] = 255
   }
   return { data, width: w, height: h } as ImageData
 }
@@ -35,9 +38,12 @@ describe('generateParticles', () => {
     const r = generateParticles(img, 2)
     expect(r.texSize).toBe(Math.ceil(Math.sqrt(r.count)))
     for (let i = 0; i < r.count; i++) {
-      const u = r.uvs[i * 2], v = r.uvs[i * 2 + 1]
-      expect(u).toBeGreaterThanOrEqual(0); expect(u).toBeLessThanOrEqual(1)
-      expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1)
+      const u = r.uvs[i * 2],
+        v = r.uvs[i * 2 + 1]
+      expect(u).toBeGreaterThanOrEqual(0)
+      expect(u).toBeLessThanOrEqual(1)
+      expect(v).toBeGreaterThanOrEqual(0)
+      expect(v).toBeLessThanOrEqual(1)
     }
   })
   it('step > W/H 时仅生成 1 个粒子', () => {

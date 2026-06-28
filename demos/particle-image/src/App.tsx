@@ -10,9 +10,15 @@ export default function App() {
   const [image, setImage] = useState<string>(defaultImg)
   const [error, setError] = useState<string | null>(null)
   const [hud, setHud] = useState<HUDState>({
-    particleSize: 2, depthScale: 40, samplingStep: 3,
-    interactionRadius: 30, interactionStrength: 120, returnSpeed: 8,
-    damping: 0.92, opacity: 1, autoRotate: false,
+    particleSize: 2,
+    depthScale: 40,
+    samplingStep: 3,
+    interactionRadius: 30,
+    interactionStrength: 120,
+    returnSpeed: 8,
+    damping: 0.92,
+    opacity: 1,
+    autoRotate: false,
   })
 
   const onUpload = useCallback(async (file: File) => {
@@ -20,7 +26,7 @@ export default function App() {
       setError(null)
       await loadImageFromFile(file) // 校验格式/可加载
       // 替换前释放旧 blob URL，防止内存泄漏
-      setImage(prev => {
+      setImage((prev) => {
         if (prev.startsWith('blob:')) URL.revokeObjectURL(prev)
         return URL.createObjectURL(file)
       })
@@ -29,14 +35,23 @@ export default function App() {
     }
   }, [])
 
-  const onChange = useCallback((patch: Partial<HUDState>) => setHud((s) => ({ ...s, ...patch })), [])
+  const onChange = useCallback(
+    (patch: Partial<HUDState>) => setHud((s) => ({ ...s, ...patch })),
+    [],
+  )
   const onResetView = useCallback(() => controlsRef.current?.reset(), [])
 
   const props: ParticleImageProps = {
     image,
-    particleSize: hud.particleSize, depthScale: hud.depthScale, samplingStep: hud.samplingStep,
-    interactionRadius: hud.interactionRadius, interactionStrength: hud.interactionStrength,
-    returnSpeed: hud.returnSpeed, damping: hud.damping, opacity: hud.opacity, autoRotate: hud.autoRotate,
+    particleSize: hud.particleSize,
+    depthScale: hud.depthScale,
+    samplingStep: hud.samplingStep,
+    interactionRadius: hud.interactionRadius,
+    interactionStrength: hud.interactionStrength,
+    returnSpeed: hud.returnSpeed,
+    damping: hud.damping,
+    opacity: hud.opacity,
+    autoRotate: hud.autoRotate,
     controlsRef,
   }
 
@@ -47,9 +62,20 @@ export default function App() {
       </Canvas>
       <HUD state={hud} onChange={onChange} onUpload={onUpload} onResetView={onResetView} />
       {error && (
-        <div style={{ position: 'fixed', bottom: 16, left: '50%', transform: 'translateX(-50%)',
-          background: 'rgba(255,80,80,0.15)', color: '#ffd0d0', padding: '8px 16px',
-          borderRadius: 8, border: '1px solid rgba(255,80,80,0.4)', zIndex: 11 }}>
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 16,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'rgba(255,80,80,0.15)',
+            color: '#ffd0d0',
+            padding: '8px 16px',
+            borderRadius: 8,
+            border: '1px solid rgba(255,80,80,0.4)',
+            zIndex: 11,
+          }}
+        >
           {error}（已保留当前图片）
         </div>
       )}

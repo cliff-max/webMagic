@@ -13,7 +13,13 @@ export type GPGPU = {
 }
 
 /** 装配 GPUComputationRenderer：position/velocity 双纹理 ping-pong；origin 为常量 sampler */
-export function useGPGPU({ origin, texSize }: { origin: THREE.DataTexture; texSize: number }): GPGPU | null {
+export function useGPGPU({
+  origin,
+  texSize,
+}: {
+  origin: THREE.DataTexture
+  texSize: number
+}): GPGPU | null {
   const gl = useThree((s) => s.gl)
   const ref = useRef<GPGPU | null>(null)
 

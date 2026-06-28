@@ -8,7 +8,7 @@ export function usePointer3D(planeRef: React.RefObject<THREE.Mesh | null>) {
   const active = useRef(false)
   const ndc = useMemo(() => new THREE.Vector2(), [])
   const raycaster = useMemo(() => new THREE.Raycaster(), [])
-  const plane = useMemo(() => new THREE.Plane(), [])      // 复用，避免每帧 GC
+  const plane = useMemo(() => new THREE.Plane(), []) // 复用，避免每帧 GC
   const normal = useMemo(() => new THREE.Vector3(), [])
   const hit = useMemo(() => new THREE.Vector3(), [])
   const camera = useThree((s) => s.camera)

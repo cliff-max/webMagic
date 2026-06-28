@@ -4,14 +4,19 @@ import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 type Props = {
-  aspect: number   // 图片 width/height
+  aspect: number // 图片 width/height
   depthScale: number
   autoRotate?: boolean
   controlsRef?: React.Ref<any>
 }
 
 /** OrbitControls + 按图片尺寸自动适配相机距离，保证横/竖/方图全入画 */
-export default function CameraSystem({ aspect, depthScale, autoRotate = false, controlsRef }: Props) {
+export default function CameraSystem({
+  aspect,
+  depthScale,
+  autoRotate = false,
+  controlsRef,
+}: Props) {
   const camera = useThree((s) => s.camera)
 
   useEffect(() => {

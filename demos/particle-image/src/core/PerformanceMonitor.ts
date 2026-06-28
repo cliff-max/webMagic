@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-const FPS_LOW = 45      // 低于此值考虑降级
-const FPS_HIGH = 58     // 高于此值且余量足考虑升级
-const WINDOW = 60       // 滑窗帧数
+const FPS_LOW = 45 // 低于此值考虑降级
+const FPS_HIGH = 58 // 高于此值且余量足考虑升级
+const WINDOW = 60 // 滑窗帧数
 const MIN_STEP = 2
 const MAX_STEP = 6
 

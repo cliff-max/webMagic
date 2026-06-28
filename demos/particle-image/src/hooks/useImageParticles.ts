@@ -32,7 +32,12 @@ export function useImageParticles(
   depthScale: number,
   maxDim = 512,
 ): Result {
-  const [result, setResult] = useState<Result>({ data: null, originTexture: null, width: 1, height: 1 })
+  const [result, setResult] = useState<Result>({
+    data: null,
+    originTexture: null,
+    width: 1,
+    height: 1,
+  })
 
   useEffect(() => {
     let cancelled = false
@@ -43,7 +48,8 @@ export function useImageParticles(
         const data = generateParticles(imageData, samplingStep)
         applyDepth(data, depthScale)
         const originTexture = vec3ArrayToTexture(data.positions, data.texSize)
-        if (!cancelled) setResult({ data, originTexture, width: imageData.width, height: imageData.height })
+        if (!cancelled)
+          setResult({ data, originTexture, width: imageData.width, height: imageData.height })
       })
       .catch((e) => {
         console.error('[useImageParticles] 图片粒子生成失败:', e)

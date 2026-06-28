@@ -56,11 +56,7 @@ export default function ParticleImage({
   // HUD 手动改 samplingStep 时同步到 step
   useEffect(() => setStep(samplingStep), [samplingStep])
 
-  const { data, originTexture, width, height } = useImageParticles(
-    image,
-    step,
-    depthScale,
-  )
+  const { data, originTexture, width, height } = useImageParticles(image, step, depthScale)
 
   // GPGPU 未就绪时传入空纹理兜底，避免 hook 抛异常
   const gpgpu = useGPGPU(

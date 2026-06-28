@@ -12,7 +12,10 @@ describe('textureEncode', () => {
     const arr = new Float32Array([1, 2, 3])
     const tex = vec3ArrayToTexture(arr, 1)
     const d = tex.image.data as unknown as Float32Array
-    expect(d[0]).toBe(1); expect(d[1]).toBe(2); expect(d[2]).toBe(3); expect(d[3]).toBe(1)
+    expect(d[0]).toBe(1)
+    expect(d[1]).toBe(2)
+    expect(d[2]).toBe(3)
+    expect(d[3]).toBe(1)
   })
   it('zerosTexture 全 0', () => {
     const tex = zerosTexture(2)
