@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useImageParticles } from '../../hooks/useImageParticles'
@@ -62,7 +62,7 @@ export default function ParticleImage({
   const { pointer3D, isActive, events } = usePointer3D(planeRef)
 
   // 同步交互参数到 velocity uniforms（props 变化时立即生效）
-  useMemo(() => {
+  useEffect(() => {
     if (!gpgpu) return
     gpgpu.velocityUniforms.uInteractionRadius.value = interactionRadius
     gpgpu.velocityUniforms.uInteractionStrength.value = interactionStrength
