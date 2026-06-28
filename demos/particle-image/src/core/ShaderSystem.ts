@@ -43,7 +43,10 @@ export function useGPGPU({ origin, texSize }: { origin: THREE.DataTexture; texSi
     posVar.material.uniforms.uDelta = { value: 0.016 }
 
     const error = gpu.init()
-    if (error !== null) console.error('[GPGPU] init error:', error)
+    if (error !== null) {
+      console.error('[GPGPU] init error:', error)
+      return null
+    }
 
     ref.current = {
       velocityUniforms: velVar.material.uniforms,
