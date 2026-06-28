@@ -28,6 +28,7 @@ describe('generateParticles', () => {
     // 第一个采样点 (0,0) → x=-2, y=+2（H/2 - 0）
     expect(r.positions[0]).toBe(-2)
     expect(r.positions[1]).toBe(2)
+    expect(r.positions[2]).toBe(0) // z 暂为 0，Task 4 填深度
   })
   it('texSize = ceil(sqrt(count))，uvs 落在 [0,1]', () => {
     const img = fakeImage(10, 8, [0, 0, 0])
@@ -38,5 +39,30 @@ describe('generateParticles', () => {
       expect(u).toBeGreaterThanOrEqual(0); expect(u).toBeLessThanOrEqual(1)
       expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1)
     }
+  })
+  it('step > W/H 时仅生成 1 个粒子', () => {
+    const img = fakeImage(10, 8, [255, 0, 0])
+    const r = generateParticles(img, 20)
+    expect(r.count).toBe(1)
+    expect(r.texSize).toBe(1)
+    expect(r.uvs[0]).toBeCloseTo(0.5, 2)
+    expect(r.uvs[1]).toBeCloseTo(0.5, 2)
+  })
+  it('W 不能被 step 整除时 Math.min clamp 防止越界', () => {
+    const img = fakeImage(10, 8, [0, 0, 0])
+    const r = generateParticles(img, 3)
+    // ceil(10/3)=4, ceil(8/3)=3 → 12
+    expect(r.count).toBe(12)
+    // 所有位置 x 不超过 W/2=5（Math.min(col*step, W-1) 保证不越界）
+    for (let i = 0; i < r.count; i++) {
+      expect(r.positions[i * 3]).toBeLessThanOrEqual(10 / 2)
+    }
+  })
+  it('单像素图片生成 1 个粒子', () => {
+    const img = fakeImage(1, 1, [128, 64, 32])
+    const r = generateParticles(img, 1)
+    expect(r.count).toBe(1)
+    expect(r.positions[0]).toBe(-0.5)
+    expect(r.positions[1]).toBe(0.5)
   })
 })
